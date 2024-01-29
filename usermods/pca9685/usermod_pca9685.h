@@ -15,7 +15,6 @@ private:
   // Defaults
   bool enabled = false;
   int i2cAddress = 0x40;
-  int segmentId = 0;
 
   // Variables
   static const char _name[];
@@ -71,7 +70,6 @@ public:
     JsonObject top = root.createNestedObject(FPSTR(_name));
     top["Enabled"] = enabled;
     top["I2C Address"] = i2cAddress;
-    top["Segment Id"] = segmentId;
   }
 
   bool readFromConfig(JsonObject &root)
@@ -80,7 +78,6 @@ public:
     bool configComplete = !top.isNull();
     configComplete &= getJsonValue(top["Enabled"], enabled);
     configComplete &= getJsonValue(top["I2C Address"], i2cAddress);
-    configComplete &= getJsonValue(top["Segment Id"], segmentId);
     return configComplete;
   }
 
