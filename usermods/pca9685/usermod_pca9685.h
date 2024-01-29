@@ -15,6 +15,7 @@ private:
   // Defaults
   bool enabled = false;
   int i2cAddress = 0x40;
+  bool calculateWhiteFromRGB = false;
 
   // Variables
   static const char _name[];
@@ -55,13 +56,19 @@ public:
     for (uint8_t i = 0; i < l; ++i)
     {
       uint32_t color = strip.getPixelColor(i);
-      // uint8_t r = byte(color & 0xff);
-      // uint8_t g = byte(color >> 8 & 0xff);
-      // uint8_t b = byte(color >> 16 & 0xff);
-      uint8_t w = byte(color >> 24 & 0xff);
-      uint16_t v = w;
-      v <<= 4;
-      set_channel_value(i, v);
+      if (calculateWhiteFromRGB)
+      {
+        // 0.299 ∙ Red + 0.587 ∙ Green + 0.114 ∙ Blue.
+        // and << 4 (8 to 12 bits) = *16
+        set_channel_value(i,
+                          uint16_t(float(color & 0xff) * 16.0 * 0.114 +
+                                   float(color >> 8 & 0xff) * 16.0 * 0.587 +
+                                   float(color >> 16 & 0xff) * 16.0 * 0.299));
+      }
+      else
+      {
+        set_channel_value(i, uint16_t(color >> 20 & 0xff0));
+      }
     }
   }
 
@@ -70,6 +77,7 @@ public:
     JsonObject top = root.createNestedObject(FPSTR(_name));
     top["Enabled"] = enabled;
     top["I2C Address"] = i2cAddress;
+    top["Calculate white from RGB"] = calculateWhiteFromRGB;
   }
 
   bool readFromConfig(JsonObject &root)
@@ -78,6 +86,7 @@ public:
     bool configComplete = !top.isNull();
     configComplete &= getJsonValue(top["Enabled"], enabled);
     configComplete &= getJsonValue(top["I2C Address"], i2cAddress);
+    configComplete &= getJsonValue(top["Calculate white from RGB"], calculateWhiteFromRGB);
     return configComplete;
   }
 
