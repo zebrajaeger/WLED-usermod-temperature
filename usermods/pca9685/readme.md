@@ -49,7 +49,7 @@ In
 
 set "SK6812/WS2814 RGBW" as type and a length of 16. Choose an unused gpio port. The white channel is important. We will take the brightness from this channel!
 
-Also set "Auto-calculate white channel from RGB" to "Brighter". With this setting, the white value is calculated from the red, green and blue channels.   
+Also set "Auto-calculate white channel from RGB" to "Brighter" or "Max". With this setting, the white value is calculated from the red, green and blue channels.   
 It it important that we have rgb channels because FXLed, for example, needs them.
 
 ## Configure Usermod
