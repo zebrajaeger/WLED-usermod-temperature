@@ -60,3 +60,10 @@ In
 
 check "Enabled" and change the I2C address if needed (default is 0x40 = 64).
 
+## To use with realtime protocol (i.e. E1.31)
+
+In
+ 
+     Config -> Sync interfaces -> Realtime
+
+set "Use main segment only" to true.
