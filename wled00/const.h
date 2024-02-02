@@ -23,6 +23,11 @@
   #endif
 #endif
 
+// #define WLED_MAX_BUSSES 16
+// #ifndef WLED_MIN_VIRTUAL_BUSSES
+//   #define WLED_MIN_VIRTUAL_BUSSES 0
+// #endif
+
 #ifndef WLED_MAX_BUSSES
   #ifdef ESP8266
     #define WLED_MAX_BUSSES 3
@@ -44,10 +49,10 @@
       #define WLED_MIN_VIRTUAL_BUSSES 4
     #else
       #if defined(USERMOD_AUDIOREACTIVE)      // requested by @softhack007 https://github.com/blazoncek/WLED/issues/33
-        #define WLED_MAX_BUSSES 8
+        #define WLED_MAX_BUSSES 14
         #define WLED_MIN_VIRTUAL_BUSSES 2
       #else
-        #define WLED_MAX_BUSSES 10
+        #define WLED_MAX_BUSSES 16
         #define WLED_MIN_VIRTUAL_BUSSES 0
       #endif
     #endif
@@ -59,10 +64,10 @@
     #endif
     #define WLED_MIN_VIRTUAL_BUSSES (5-WLED_MAX_BUSSES)
   #else
-    #if WLED_MAX_BUSES > 10
-      #error Maximum number of buses is 10.
+    #if WLED_MAX_BUSES > 16
+      #error Maximum number of buses is 16.
     #endif
-    #define WLED_MIN_VIRTUAL_BUSSES (10-WLED_MAX_BUSSES)
+     #define WLED_MIN_VIRTUAL_BUSSES (16-WLED_MAX_BUSSES)
   #endif
 #endif
 

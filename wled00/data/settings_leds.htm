@@ -319,8 +319,10 @@
 		}
 		function lastEnd(i) {
 			if (i<1) return 0;
-			v = parseInt(d.getElementsByName("LS"+(i-1))[0].value) + parseInt(d.getElementsByName("LC"+(i-1))[0].value);
-			var t = parseInt(d.getElementsByName("LT"+(i-1))[0].value);
+			var i2 = i-1;
+			var id = i2<10 ? String.fromCharCode(48+i2) : String.fromCharCode(55+i2);
+			v = parseInt(d.getElementsByName("LS"+id)[0].value) + parseInt(d.getElementsByName("LC"+id)[0].value);
+			var t = parseInt(d.getElementsByName("LT"+id)[0].value);
 			if (t > 31 && t < 48) v = 1; //PWM busses
 			if (isNaN(v)) return 0;
 			return v;
@@ -334,11 +336,12 @@
 
 			var f = gId("mLC");
 			if (n==1) {
+				var id = i<10 ? String.fromCharCode(48+i) : String.fromCharCode(55+i);
 // npm run build has trouble minimizing spaces inside string
 				var cn = `<div class="iST">
 <hr class="sml">
 ${i+1}:
-<select name="LT${i}" onchange="UI(true)">${i>=maxB ? '' :
+<select name="LT${id}" onchange="UI(true)">${i>=maxB ? '' :
 '<option value="22" selected>WS281x</option>\
 <option value="30">SK6812/WS2814 RGBW</option>\
 <option value="31">TM1814</option>\
@@ -364,8 +367,8 @@ ${i+1}:
 <option value="82">Art-Net RGB (network)</option>
 <option value="88">DDP RGBW (network)</option>
 </select><br>
-<div id="co${i}" style="display:inline">Color Order:
-<select name="CO${i}">
+<div id="co${id}" style="display:inline">Color Order:
+<select name="CO${id}">
 <option value="0">GRB</option>
 <option value="1">RGB</option>
 <option value="2">BRG</option>
@@ -373,21 +376,21 @@ ${i+1}:
 <option value="4">BGR</option>
 <option value="5">GBR</option>
 </select></div>
-<div id="dig${i}w" style="display:none">Swap: <select name="WO${i}"><option value="0">None</option><option value="1">W & B</option><option value="2">W & G</option><option value="3">W & R</option></select></div>
-<div id="dig${i}l" style="display:none">Clock: <select name="SP${i}"><option value="0">Slowest</option><option value="1">Slow</option><option value="2">Normal</option><option value="3">Fast</option><option value="4">Fastest</option></select></div>
+<div id="dig${id}w" style="display:none">Swap: <select name="WO${id}"><option value="0">None</option><option value="1">W & B</option><option value="2">W & G</option><option value="3">W & R</option></select></div>
+<div id="dig${id}l" style="display:none">Clock: <select name="SP${id}"><option value="0">Slowest</option><option value="1">Slow</option><option value="2">Normal</option><option value="3">Fast</option><option value="4">Fastest</option></select></div>
 <div>
-<span id="psd${i}">Start:</span> <input type="number" name="LS${i}" id="ls${i}" class="l starts" min="0" max="8191" value="${lastEnd(i)}" oninput="startsDirty[${i}]=true;UI();" required />&nbsp;
-<div id="dig${i}c" style="display:inline">Length: <input type="number" name="LC${i}" class="l" min="1" max="${maxPB}" value="1" required oninput="UI()" /></div><br>
+<span id="psd${id}">Start:</span> <input type="number" name="LS${id}" id="ls${id}" class="l starts" min="0" max="8191" value="${lastEnd(i)}" oninput="startsDirty[${id}]=true;UI();" required />&nbsp;
+<div id="dig${id}c" style="display:inline">Length: <input type="number" name="LC${id}" class="l" min="1" max="${maxPB}" value="1" required oninput="UI()" /></div><br>
 </div>
-<span id="p0d${i}">GPIO:</span><input type="number" name="L0${i}" required class="s" onchange="UI();pinUpd(this);"/>
-<span id="p1d${i}"></span><input type="number" name="L1${i}" class="s" onchange="UI();pinUpd(this);"/>
-<span id="p2d${i}"></span><input type="number" name="L2${i}" class="s" onchange="UI();pinUpd(this);"/>
-<span id="p3d${i}"></span><input type="number" name="L3${i}" class="s" onchange="UI();pinUpd(this);"/>
-<span id="p4d${i}"></span><input type="number" name="L4${i}" class="s" onchange="UI();pinUpd(this);"/>
-<div id="dig${i}r" style="display:inline"><br><span id="rev${i}">Reversed</span>: <input type="checkbox" name="CV${i}"></div>
-<div id="dig${i}s" style="display:inline"><br>Skip first LEDs: <input type="number" name="SL${i}" min="0" max="255" value="0" oninput="UI()"></div>
-<div id="dig${i}f" style="display:inline"><br>Off Refresh: <input id="rf${i}" type="checkbox" name="RF${i}"></div>
-<div id="dig${i}a" style="display:inline"><br>Auto-calculate white channel from RGB:<br><select name="AW${i}"><option value=0>None</option><option value=1>Brighter</option><option value=2>Accurate</option><option value=3>Dual</option><option value=4>Max</option></select>&nbsp;</div>
+<span id="p0d${id}">GPIO:</span><input type="number" name="L0${id}" required class="s" onchange="UI();pinUpd(this);"/>
+<span id="p1d${id}"></span><input type="number" name="L1${id}" class="s" onchange="UI();pinUpd(this);"/>
+<span id="p2d${id}"></span><input type="number" name="L2${id}" class="s" onchange="UI();pinUpd(this);"/>
+<span id="p3d${id}"></span><input type="number" name="L3${id}" class="s" onchange="UI();pinUpd(this);"/>
+<span id="p4d${id}"></span><input type="number" name="L4${id}" class="s" onchange="UI();pinUpd(this);"/>
+<div id="dig${id}r" style="display:inline"><br><span id="rev${id}">Reversed</span>: <input type="checkbox" name="CV${id}"></div>
+<div id="dig${id}s" style="display:inline"><br>Skip first LEDs: <input type="number" name="SL${id}" min="0" max="255" value="0" oninput="UI()"></div>
+<div id="dig${id}f" style="display:inline"><br>Off Refresh: <input id="rf${id}" type="checkbox" name="RF${id}"></div>
+<div id="dig${id}a" style="display:inline"><br>Auto-calculate white channel from RGB:<br><select name="AW${id}"><option value=0>None</option><option value=1>Brighter</option><option value=2>Accurate</option><option value=3>Dual</option><option value=4>Max</option></select>&nbsp;</div>
 </div>`;
 				f.insertAdjacentHTML("beforeend", cn);
 			}
@@ -403,14 +406,14 @@ ${i+1}:
 
 		function addCOM(start=0,len=1,co=0) {
 			var i = d.getElementsByClassName("com_entry").length;
-			if (i >= 10) return;
-
+			if (i >= 16) return;
+			var id = i<10 ? String.fromCharCode(48+i) : String.fromCharCode(55+i);
 			var b = `<div class="com_entry">
 <hr class="sml">
-${i+1}: Start: <input type="number" name="XS${i}" id="xs${i}" class="l starts" min="0" max="65535" value="${start}" oninput="UI();" required="">&nbsp;
-Length: <input type="number" name="XC${i}" id="xc${i}" class="l" min="1" max="65535" value="${len}" required="" oninput="UI()">
+${i+1}: Start: <input type="number" name="XS${id}" id="xs${id}" class="l starts" min="0" max="65535" value="${start}" oninput="UI();" required="">&nbsp;
+Length: <input type="number" name="XC${id}" id="xc${id}" class="l" min="1" max="65535" value="${len}" required="" oninput="UI()">
 <div style="display:inline">Color Order:
-<select id="xo${i}" name="XO${i}">
+<select id="xo${id}" name="XO${id}">
 <option value="0">GRB</option>
 <option value="1">RGB</option>
 <option value="2">BRG</option>
@@ -420,7 +423,7 @@ Length: <input type="number" name="XC${i}" id="xc${i}" class="l" min="1" max="65
 </select>
 </div><br></div>`;
 			gId("com_entries").insertAdjacentHTML("beforeend", b);
-			gId("xo"+i).value = co;
+			gId("xo"+id).value = co;
 			btnCOM(i+1);
 			UI();
 		}
@@ -451,8 +454,9 @@ Length: <input type="number" name="XC${i}" id="xc${i}" class="l" min="1" max="65
 
 		function addBtn(i,p,t) {
 			var c = gId("btns").innerHTML;
-			var bt = "BT" + String.fromCharCode((i<10?48:55)+i);
-			var be = "BE" + String.fromCharCode((i<10?48:55)+i);
+			var id = i<10 ? String.fromCharCode(48+i) : String.fromCharCode(55+i);
+			var bt = "BT" + id;
+			var be = "BE" + id;
 			c += `Button ${i} GPIO: <input type="number" name="${bt}" onchange="UI()" class="xs" value="${p}">`;
 			c += `&nbsp;<select name="${be}">`
 			c += `<option value="0" ${t==0?"selected":""}>Disabled</option>`;
@@ -475,8 +479,10 @@ Length: <input type="number" name="XC${i}" id="xc${i}" class="l" min="1" max="65
 		function checkSi() { //on load, checks whether there are custom start fields
 			var cs = false;
 			for (var i=1; i < d.getElementsByClassName("iST").length; i++) {
-				var v = parseInt(gId("ls"+(i-1)).value) + parseInt(d.getElementsByName("LC"+(i-1))[0].value);
-				if (v != parseInt(gId("ls"+i).value)) {cs = true; startsDirty[i] = true;}
+				var id1 = i-1<10 ? String.fromCharCode(48+i-1) : String.fromCharCode(55+i-1);
+				var id2 = i<10 ? String.fromCharCode(48+i) : String.fromCharCode(55+i);
+				var v = parseInt(gId("ls"+id1).value) + parseInt(d.getElementsByName("LC"+id1)[0].value);
+				if (v != parseInt(gId("ls"+id2).value)) {cs = true; startsDirty[i] = true;}
 			}
 			if (gId("ls0") && parseInt(gId("ls0").value) != 0) {cs = true; startsDirty[0] = true;}
 			gId("si").checked = cs;
@@ -519,11 +525,12 @@ Length: <input type="number" name="XC${i}" id="xc${i}" class="l" min="1" max="65
 				var c = JSON.parse(lines); 
 				if (c.hw) {
 					if (c.hw.led) {
-						for (var i=0; i<10; i++) addLEDs(-1);
+						for (var i=0; i<16; i++) addLEDs(-1);
 						var l = c.hw.led;
 						l.ins.forEach((v,i,a)=>{
 							addLEDs(1);
-							for (var j=0; j<v.pin.length; j++) d.getElementsByName(`L${j}${i}`)[0].value = v.pin[j];
+							var id = i<10 ? String.fromCharCode(48+i) : String.fromCharCode(55+i);
+							for (var j=0; j<v.pin.length; j++) d.getElementsByName(`L${j}${id}`)[0].value = v.pin[j];
 							d.getElementsByName("LT"+i)[0].value = v.type;
 							d.getElementsByName("LS"+i)[0].value = v.start;
 							d.getElementsByName("LC"+i)[0].value = v.len;

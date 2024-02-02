@@ -96,17 +96,18 @@ void handleSettingsSet(AsyncWebServerRequest *request, byte subPage)
 
     bool busesChanged = false;
     for (uint8_t s = 0; s < WLED_MAX_BUSSES+WLED_MIN_VIRTUAL_BUSSES; s++) {
-      char lp[4] = "L0"; lp[2] = 48+s; lp[3] = 0; //ascii 0-9 //strip data pin
-      char lc[4] = "LC"; lc[2] = 48+s; lc[3] = 0; //strip length
-      char co[4] = "CO"; co[2] = 48+s; co[3] = 0; //strip color order
-      char lt[4] = "LT"; lt[2] = 48+s; lt[3] = 0; //strip type
-      char ls[4] = "LS"; ls[2] = 48+s; ls[3] = 0; //strip start LED
-      char cv[4] = "CV"; cv[2] = 48+s; cv[3] = 0; //strip reverse
-      char sl[4] = "SL"; sl[2] = 48+s; sl[3] = 0; //skip first N LEDs
-      char rf[4] = "RF"; rf[2] = 48+s; rf[3] = 0; //refresh required
-      char aw[4] = "AW"; aw[2] = 48+s; aw[3] = 0; //auto white mode
-      char wo[4] = "WO"; wo[2] = 48+s; wo[3] = 0; //channel swap
-      char sp[4] = "SP"; sp[2] = 48+s; sp[3] = 0; //bus clock speed (DotStar & PWM)
+      char id = s<10 ? 48+s : 55+s;
+      char lp[4] = "L0"; lp[2] = id; lp[3] = 0; //ascii 0-9 //strip data pin
+      char lc[4] = "LC"; lc[2] = id; lc[3] = 0; //strip length
+      char co[4] = "CO"; co[2] = id; co[3] = 0; //strip color order
+      char lt[4] = "LT"; lt[2] = id; lt[3] = 0; //strip type
+      char ls[4] = "LS"; ls[2] = id; ls[3] = 0; //strip start LED
+      char cv[4] = "CV"; cv[2] = id; cv[3] = 0; //strip reverse
+      char sl[4] = "SL"; sl[2] = id; sl[3] = 0; //skip first N LEDs
+      char rf[4] = "RF"; rf[2] = id; rf[3] = 0; //refresh required
+      char aw[4] = "AW"; aw[2] = id; aw[3] = 0; //auto white mode
+      char wo[4] = "WO"; wo[2] = id; wo[3] = 0; //channel swap
+      char sp[4] = "SP"; sp[2] = id; sp[3] = 0; //bus clock speed (DotStar & PWM)
       if (!request->hasArg(lp)) {
         DEBUG_PRINT(F("No data for "));
         DEBUG_PRINTLN(s);
