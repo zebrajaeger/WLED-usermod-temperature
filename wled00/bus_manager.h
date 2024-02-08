@@ -125,6 +125,7 @@ class Bus {
     virtual void     setPixelColor(uint16_t pix, uint32_t c) = 0;
     virtual uint32_t getPixelColor(uint16_t pix) { return 0; }
     virtual void     setBrightness(uint8_t b)    { _bri = b; };
+    virtual uint8_t  getBrightness()             { return _bri; };
     virtual void     cleanup() = 0;
     virtual uint8_t  getPins(uint8_t* pinArray)  { return 0; }
     virtual uint16_t getLength()                 { return _len; }

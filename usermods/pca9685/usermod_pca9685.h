@@ -53,6 +53,12 @@ public:
       l = 16;
     }
 
+    float gb = 0.5;
+    if (busses.getNumBusses() > 0)
+    {
+      gb = busses.getBus(0)->getBrightness();
+      gb /= 255.0;
+    }
     for (uint8_t i = 0; i < l; ++i)
     {
       uint32_t color = strip.getPixelColor(i);
@@ -60,10 +66,9 @@ public:
       {
         // 0.299 ∙ Red + 0.587 ∙ Green + 0.114 ∙ Blue.
         // and << 4 (8 to 12 bits) = *16
-        set_channel_value(i,
-                          uint16_t(float(color & 0xff) * 16.0 * 0.114 +
-                                   float(color >> 8 & 0xff) * 16.0 * 0.587 +
-                                   float(color >> 16 & 0xff) * 16.0 * 0.299));
+        set_channel_value(i, uint16_t(float(color & 0xff) * 16.0 * 0.114 * gb +
+                                      float(color >> 8 & 0xff) * 16.0 * 0.587 * gb +
+                                      float(color >> 16 & 0xff) * 16.0 * 0.299 * gb));
       }
       else
       {
