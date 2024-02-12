@@ -3,8 +3,8 @@
 #include "wled.h"
 #include "NTC_temperature_lut.h"
 
-#ifdef ARDUINO_ARCH_ESP32
-  #error This NTC_temperature_event usermod supports the ESP32.
+#ifndef ARDUINO_ARCH_ESP32
+#error This NTC_temperature_event usermod supports onlythe ESP32 architecture.
 #endif
 
 class UsermodNtcTemperatureEvent : public Usermod
@@ -176,8 +176,8 @@ public:
     top["Threshold Temperature in &deg;C"] = thresholdTemperature;
     top["Hysteresis in &deg;C"] = hysteresis;
     top["NTC pin"] = ntcPin;
-    top["On preset"] = onPreset;
     top["Off Preset"] = offPreset;
+    top["On Preset"] = onPreset;
   };
 
   bool readFromConfig(JsonObject &root)
@@ -193,8 +193,8 @@ public:
     configComplete &= getJsonValue(top["Reading interval in ms"], readingIntervalMs);
     configComplete &= getJsonValue(top["Threshold Temperature in &deg;C"], hysteresis);
     configComplete &= getJsonValue(top["Hysteresis in &deg;C"], hysteresis);
-    configComplete &= getJsonValue(top["On Preset"], onPreset);
     configComplete &= getJsonValue(top["Off Preset"], offPreset);
+    configComplete &= getJsonValue(top["On Preset"], onPreset);
 
     if (initDone && (ntcPin != oldNtcPin))
     {
